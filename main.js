@@ -14,6 +14,13 @@ function step() {
   animate(step);
 }
 
+var computerScore = 0;
+var playerScore = 0;
+
+var computerScoreElement = document.getElementById("currentComputerScore");
+
+var playerScoreElement = document.getElementById("currentPlayerScore");
+
 function Paddle(x_position, y_position) {
 	this.x_position = x_position;
 	this.y_position = y_position;
@@ -110,6 +117,18 @@ Ball.prototype.update = function() {
     this.speed = 3;
     computer.y_position = 250;
     playerOne.y_position = 250;
+    computerScore++;
+    computerScoreElement.innerHTML = computerScore;
+    if (computerScore == 11) {
+      playerScoreElement.innerHTML  = 0;
+      computerScoreElement.innerHTML = 0;
+      computer.y_position = 250;
+      playerOne.y_position = 250;
+      this.x_position = canvas.width / 2;
+      this.y_position = canvas.height / 2;
+      this.speed = 0;
+      alert("You were beaten by a stupid computer. Refresh page to try again.");
+    }
   } else if (this.x_position < 20) { // Player Scores
     this.x_position = canvas.width / 2;
     this.y_position = canvas.height / 2;
@@ -119,6 +138,18 @@ Ball.prototype.update = function() {
     this.speed = 3;
     computer.y_position = 250;
     playerOne.y_position = 250;
+    playerScore++;
+    playerScoreElement.innerHTML  = playerScore;
+    if (playerScore == 11) {
+      playerScoreElement.innerHTML  = 0;
+      computerScoreElement.innerHTML = 0;
+      computer.y_position = 250;
+      playerOne.y_position = 250;
+      this.x_position = canvas.width / 2;
+      this.y_position = canvas.height / 2;
+      this.speed = 0;
+      alert("You've Won!! Refresh page to try again!");
+    }
   }
 }
 

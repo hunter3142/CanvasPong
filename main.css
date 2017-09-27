@@ -1,9 +1,40 @@
 #myCanvas {
 	background-color: black;
 	position: absolute;
+  display: inline-block;
   margin: auto;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+}
+
+#scoreBox {
+  margin: auto;
+  background-color: red;
+  width: 750px;
+  height: 40px;
+}
+
+#computerScoreSection {
+  float: left;
+  margin-left: 20px;
+  font-size: 1em;
+}
+
+#playerScoreSection {
+  float: right;
+  margin-right: 100px;
+  font-size: 1em;
+}
+
+.postedScore {
+  display: inline-block;
+  position: relative;
+  margin: auto;
+}
+
+.currentScore {
+  display: inline-block;
+  position: relative;
 }
