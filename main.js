@@ -33,13 +33,24 @@ Paddle.prototype.move = function(y_change) {
   this.y_position += y_change;
 }
 
+Paddle.prototype.update = function(Ball) {
+  this.paddle_middle = this.y_position + 50;
+  this.ball_middle = Ball.y_position;
+  this.diff = this.paddle_middle - this.ball_middle;
+  if ((this.diff < 0) && (this.y_position <= 490)){
+    this.move(1.5);
+  } else if ((this.diff > 0) && (this.y_position >= 10)) {
+    this.move(-1.5);
+  }
+}
+
 function Ball() {
 	this.x_position = canvas.width / 2;
 	this.y_position = canvas.height / 2;
 	this.radius =10;
 	this.start_angle = 0;
 	this.end_angle = 2 * Math.PI;
-  this.speed = 2;
+  this.speed = 3;
   this.angle = Math.random(0, (2 * Math.PI));
   this.x_direction = Math.cos(this.angle); 
   this.y_direction = Math.sin(this.angle);
@@ -76,16 +87,38 @@ Ball.prototype.update = function() {
   } else {
     paddle = playerOne;
   }
-  if (this.x_right > 675) {
+  if (this.x_right > 675) { // Player paddle
     if (this.y_position >= paddle.y_position && this.y_position <= (paddle.y_position + paddle.height)) {
       this.x_direction = this.x_direction * -1;
       this.x_position = 665;
+      this.speed += .50;
     }
-  } else if (this.x_left < 65) {
+  } else if (this.x_left < 65) { // Computer paddle
     if (this.y_position >= paddle.y_position && this.y_position <= (paddle.y_position + paddle.height)) {
       this.x_direction = this.x_direction * -1;
       this.x_position = 75;
+      this.speed += .50;
     }
+  }
+  
+  if (this.x_position > 730) { // Computer scores
+    this.x_position = canvas.width / 2;
+    this.y_position = canvas.height / 2;
+    this.angle = Math.random(0, (2 * Math.PI));
+    this.x_direction = Math.cos(this.angle); 
+    this.y_direction = Math.cos(this.angle);
+    this.speed = 3;
+    computer.y_position = 250;
+    playerOne.y_position = 250;
+  } else if (this.x_position < 20) { // Player Scores
+    this.x_position = canvas.width / 2;
+    this.y_position = canvas.height / 2;
+    this.angle = Math.random(0, (2 * Math.PI));
+    this.x_direction = -Math.cos(this.angle); 
+    this.y_direction = Math.cos(this.angle);
+    this.speed = 3;
+    computer.y_position = 250;
+    playerOne.y_position = 250;
   }
 }
 
@@ -93,6 +126,7 @@ function renderBoard() {
   gameBall.update();
   gameBall.render();
 	playerOne.render();
+  computer.update(gameBall);
 	computer.render();
 }
 
